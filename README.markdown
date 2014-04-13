@@ -1,33 +1,28 @@
 
-# sns
+# traffic
 
-sns (short for Simple Network Simulator) is an application that defines
-virtual network topologies on a single machine. This can be handy for
-developing distributed algorithms, since you can test everything on one
-machine, without worrying about link-layer quirks.
-
-sns aims to be simple to set up and maintain. The virtual network topology is
-data-driven, and exists only while sns is running. Once the network is up, sns
-starts your code, passing the local IP address to bind to as a command-line
-argument. Then your system is running!
+traffic is a simple netowrk simulator. On a single machine, traffic creates a
+virtual network of nodes running your application code. This can be handy for
+implementing distributed systems, since you don't need to get a bunch of
+machines together or deal with link-layer quirks.
 
 ## Installing
 
-There currently aren't any binary distributions of sns, so the only way to set
-up sns on your machine is to build from source. This requires a POSIX
-toolchain. To install sns, simply
+There currently aren't any binary distributions of traffic, so the only way to
+set it up on your machine is to build from source. This requires a POSIX
+toolchain. To install traffic, simply
 
-    $ git clone https://github.com/davekilian/sns.git
-    $ cd sns
+    $ git clone https://github.com/davekilian/traffic.git
+    $ cd traffic
     $ make
     $ sudo make install
 
 ## Using
 
-sns works by defining a virtual network topology using 
+traffic works by defining a virtual network topology using 
 [TAP adapters](http://en.wikipedia.org/wiki/TUN/TAP), and managing applications
-that bind to these adapters. You give sns a configuration file that tells it
-how to set up the network and start your code.
+that bind to these adapters. You give traffic a configuration file that tells 
+it how to set up the network and start your code.
 
 In the future, you will be able to use a graphical utility to build these
 configuration files. In the meantime, however, you will need to write them by
@@ -62,11 +57,11 @@ Consider the following sample topology:
 
 Each node represents a single machine, with one or more network interfaces.
 These interfaces are connected through links. You can give nodes, interfaces
-and links unique IDs. If you omit an ID, sns will choose one at runtime.
+and links unique IDs. If you omit an ID, traffic will choose one at runtime.
 
 The `mac`, `ip` and `subnet` parameters specify the interface's MAC address,
 static IP, and subnet, respectively. Specifying `'auto'` or omitting the param
-lets sns choose a default.
+lets traffic choose a default.
 
 Currently `latency` and `variance` are the only way to tweak the physical
 characteristics of a data link. In the future, these parameters may be
@@ -78,7 +73,7 @@ link behavior.
 The example above defines a network topology, but no packets can move through
 the network because nobody creates any!
 
-Once sns has finished bringing up the virtual network, it executes commands
+Once traffic has finished bringing up the virtual network, it executes commands
 stored in your configuration file. Each node can have its behavior defined by
 just one of the commands below: 
 
@@ -113,7 +108,7 @@ You can add optional arguments to the switch:
 * `strategy` controls how the switch learns routes. You can specify
   `'storeAndForward'`, `'cutThrough'`, or `fragmentFree` to use a well-known
   switching algorithm, or `'psychic'` to create the perfect switch that routes
-  using sns's internal topology data. The default option is `'psychic'`.
+  using traffic's internal topology data. The default option is `'psychic'`.
 
 * `noroute` controls what psychic switches do when there is no route to the
   desired host. Valid options are `'drop'` or `'broadcast'`. The default is
@@ -139,7 +134,7 @@ folder in the repo instead.
 
 `app` specifies the command(s) that you want to 'run' on a node. In reality,
 all commands will run on your local machine simultaneously. You specify macros
-in the command line to allow sns to tell the application which local MAC
+in the command line to allow traffic to tell the application which local MAC
 address or IP address (if applicable) to bind to:
 
     node 'A' {
@@ -151,16 +146,17 @@ address or IP address (if applicable) to bind to:
 
 ### Bringing Up the Network
 
-sns is a shared library that publishes an API (see `inc/sns.h`). It also comes
-with a binary (called 'sns') that uses that API to bring networks up and down.
-To bring up a network, give sns the path to your network configuration:
+traffic is a shared library that publishes an API (see `inc/traffic.h`). It 
+also comes with a binary (called 'traffic') that uses that API to bring 
+networks up and down. To bring up a network, give traffic the path to your 
+network configuration:
 
-    $ sns mynet.conf
+    $ traffic mynet.conf
 
-`sns` will stay open while your virtual network operates. To bring down the
-virtual network, send `sns` a SIGINT (e.g. via Ctrl+C). 
+`traffic` will stay open while your virtual network operates. To bring down the
+virtual network, send `traffic` a SIGINT (e.g. via Ctrl+C). 
 
-While the network is running, `sns` will open a channel to allow monitoring
+While the network is running, `traffic` will open a channel to allow monitoring
 programs to inspect the state of the network (e.g. to check health, collect
 statistics and run visualizations). To learn more, see `docs/monitoring.md`).
 
@@ -170,10 +166,10 @@ Since this is a very young project, this section is pretty bare :)
 
 ### Environment
 
-sns is written in C. The control over memory layout and allocation that C gives
-us helps us maximize virtual network throughput.
+traffic is written in C. The control over memory layout and allocation that C 
+gives us helps us maximize virtual network throughput.
 For simplicity, we don't use a complex third-party build system to compile the
-application. Users are able to install sns with basic build tools and a few
+application. Users are able to install traffic with basic build tools and a few
 lines of shell.
 
 ### Architecture

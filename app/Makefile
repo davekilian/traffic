@@ -1,18 +1,17 @@
 
 # Output
 #
-TARGET = ../sns
+TARGET = ../traffic
 
 # Libraries
 #
-INCLUDES = -I../inc
+INCLUDES = -I..
 
-LIBS = -L.. -lsns
+LIBS = -L.. -ltraffic
 
 # Sources
 #
-HEADERS = ../inc/sns.h \
-		  ../inc/snserr.h
+HEADERS = ../traffic.h
 
 OBJECTS = main.o
 
@@ -45,4 +44,4 @@ install: $(TARGET)
 	cp $(TARGET) /usr/bin
 
 uninstall:
-	rm /usr/bin/sns
+	rm /usr/bin/traffic

@@ -9,18 +9,17 @@ endif
 
 # Output
 #
-TARGET = ../libsns.$(so)
+TARGET = ../libtraffic.$(so)
 
 # Libraries
 #
-INCLUDES = -I../inc
+INCLUDES = -I..
 
 LIBS = 
 
 # Sources
 #
-HEADERS = ../inc/sns.h \
-		  ../inc/snserr.h
+HEADERS = ../traffic.h
 
 OBJECTS = err.o
 
@@ -51,10 +50,9 @@ distclean:
 
 install: $(TARGET) $(HEADERS)
 	cp $(TARGET) /usr/lib
-	mkdir /usr/include/sns
-	cp -r ../inc/* /usr/include/sns
+	cp ../traffic.h /usr/include
 
 uninstall:
-	rm /usr/lib/libsns.$(so)
-	rm -fr /usr/include/sns
+	rm /usr/lib/libtraffic.$(so)
+	rm /usr/include/traffic.h
 
