@@ -10,10 +10,14 @@
 
 static const char *g_errstrs[] = 
 {
-    /* TR_OK */    "No error",
+    /* TR_OK */         "No error",
+    /* TR_ENOTFOUND */  "There is no item with the given name",
+    /* TR_EARRAYLEN */  "The array is not long enough for the desired list",
+    /* TR_ENAMETAKEN */ "The given unique ID is already in use",
+    /* TR_ENETINUSE */  "The network can't be unbound because a simulation is runing",
 };
 
-const char *tr_errstr(trerr error)
+const char *tr_errstr(tr_err error)
 {
     static const int numerrs = sizeof(g_errstrs) / sizeof(g_errstrs[0]);
 
