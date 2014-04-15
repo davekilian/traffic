@@ -15,6 +15,7 @@ static const char *g_errstrs[] =
     /* TR_EARRAYLEN */  "The array is not long enough for the desired list",
     /* TR_ENAMETAKEN */ "The given unique ID is already in use",
     /* TR_ENETINUSE */  "The network can't be unbound because a simulation is runing",
+    /* TR_EPOINTER */   "Function received invalid pointer",
 };
 
 const char *tr_errstr(tr_err error)

@@ -13,15 +13,26 @@ TARGET = ../libtraffic.$(so)
 
 # Libraries
 #
-INCLUDES = -I..
+INCLUDES = -I.. -I.
 
 LIBS = 
 
 # Sources
 #
-HEADERS = ../traffic.h
+HEADERS = ../traffic.h \
+		  list.h \
+		  hash.h \
+		  network.h \
+		  node.h \
+		  iface.h \
+		  link.h \
+		  conf.h
 
-OBJECTS = err.o
+OBJECTS = err.o \
+		  util/memory.o \
+		  util/list.o \
+		  util/vector.o \
+		  util/hash.o
 
 # Flags
 #
