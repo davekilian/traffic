@@ -22,6 +22,7 @@ LIBS =
 HEADERS = ../traffic.h \
 		  list.h \
 		  hash.h \
+		  vector.h \
 		  network.h \
 		  node.h \
 		  iface.h \

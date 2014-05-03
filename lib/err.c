@@ -10,12 +10,14 @@
 
 static const char *g_errstrs[] = 
 {
-    /* TR_OK */         "No error",
-    /* TR_ENOTFOUND */  "There is no item with the given name",
-    /* TR_EARRAYLEN */  "The array is not long enough for the desired list",
-    /* TR_ENAMETAKEN */ "The given unique ID is already in use",
-    /* TR_ENETINUSE */  "The network can't be unbound because a simulation is runing",
-    /* TR_EPOINTER */   "Function received invalid pointer",
+    /* TR_OK */             "No error",
+    /* TR_ENOTFOUND */      "There is no item with the given name",
+    /* TR_EARRAYLEN */      "The array is not long enough for the desired list",
+    /* TR_ENAMETAKEN */     "The given unique ID is already in use",
+    /* TR_ENETINUSE */      "The network can't be unbound because a simulation is runing",
+    /* TR_EPOINTER */       "Function received invalid pointer",
+    /* TR_ESTACKEMPTY */    "Can't pop an empty stack",
+    /* TR_EOUTOFRANGE */    "The specified index is out of range",
 };
 
 const char *tr_errstr(tr_err error)
