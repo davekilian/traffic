@@ -36,6 +36,7 @@ static const tr_err TR_ENETINUSE = -4;
 static const tr_err TR_EPOINTER = -5;
 static const tr_err TR_ESTACKEMPTY = -6;
 static const tr_err TR_EOUTOFRANGE = -7;
+static const tr_err TR_EINTERNAL = -8;
 
 // Gets an English string explaining the given error code
 //
