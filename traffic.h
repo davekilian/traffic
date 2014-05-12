@@ -17,7 +17,6 @@
 //
 
 typedef int   tr_err;      // An error code
-typedef void *tr_conf;     // A traffic config file
 typedef void *tr_network;  // A network topology
 typedef void *tr_node;     // A simulated machine
 typedef void *tr_iface;    // A network interface on a simulated machine
@@ -47,27 +46,17 @@ const char *tr_errstr(tr_err error);
 // Configuration files
 //
 
-// Opens the configuration file at the given path.
-// If successful, returns TR_OK and sets conf.
-// Otherwise returns an error and does not modify conf.
-//
-tr_err tr_conf_open(const char *path, tr_conf *conf);
-
-// Parses the network topology present in the given config file.
+// Opens and parses the config file at the given path.
 // If successful, returns TR_OK and sets net.
-// Otherwise returns an error and does not modify net.
+// Otherwise returns an error and does not modify net
 //
-tr_err tr_conf_load(tr_conf conf, tr_network *net);
+tr_err tr_conf_read(const char *path, tr_network *net);
 
-// Serializes the given network to the config file
+// Saves the given network to the config file at the given path.
+// If the file doesn't not exist, it will be created;
+// otherwise it will be overwritten.
 //
-tr_err tr_conf_write(tr_conf conf, tr_network net);
-
-// Closes the configuration file, releasing any locks on the underlying file.
-// Frees any memory in use by the conf object and invalidates it,
-// but does not invalidate any networks loaded from the conf object.
-//
-void tr_conf_close(tr_conf conf);
+tr_err tr_conf_write(tr_network net, const char *path);
 
 
 //
