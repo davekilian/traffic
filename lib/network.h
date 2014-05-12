@@ -14,6 +14,8 @@
 #include "hash.h"
 #include "set.h"
 
+struct _node;
+
 struct _network
 {
     const char *name;   // The network's friendly name
@@ -38,5 +40,13 @@ tr_err tr_net_take_id(network *net, const char *id);
 // Won't fail if the ID isn't already taken; use tr_net_id_taken instead.
 //
 tr_err tr_net_release_id(network *net, const char *id);
+
+// Adds a node to the network
+//
+tr_err tr_net_add_node(network *net, struct _node *node);
+
+// Removes a node from the network
+//
+tr_err tr_net_remove_node(network *net, struct _node *node);
 
 #endif

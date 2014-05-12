@@ -38,7 +38,9 @@ OBJECTS = err.o \
 		  util/set.o \
 		  network/create.o \
 		  network/uniqueid.o \
-		  network/model.o
+		  network/model.o \
+		  node/create.o \
+		  node/model.o
 
 # Flags
 #

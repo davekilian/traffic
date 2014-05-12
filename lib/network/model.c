@@ -68,3 +68,19 @@ tr_node tr_net_node(tr_network trn, const char *name)
     network *net = (network *)trn;
     return tr_strhash_get(net->nodes, name);
 }
+
+tr_err tr_net_add_node(network *net, struct _node *node)
+{
+    if (!net) return TR_EPOINTER;
+    if (!node) return TR_EPOINTER;
+
+    return tr_strhash_set(net->nodes, node->name, node);
+}
+
+tr_err tr_net_remove_node(network *net, struct _node *node)
+{
+    if (!net) return TR_EPOINTER;
+    if (!node) return TR_EPOINTER;
+
+    return tr_strhash_clear(net->nodes, node->name);
+}

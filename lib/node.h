@@ -11,8 +11,15 @@
 
 #include <traffic.h>
 
+#include "hash.h"
+
+struct _network;
+
 struct _node
 {
+    const char *name;       // This node's unique ID
+    struct _network *net;   // The network that contains this node
+    tr_hash ifaces;         // This node's virtual network interfaces
 };
 
 typedef struct _node node;
