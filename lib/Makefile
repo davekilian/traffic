@@ -33,7 +33,8 @@ OBJECTS = err.o \
 		  util/memory.o \
 		  util/list.o \
 		  util/vector.o \
-		  util/hash.o
+		  util/hash.o \
+		  util/set.o
 
 # Flags
 #

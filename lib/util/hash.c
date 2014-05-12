@@ -387,6 +387,11 @@ tr_err tr_strhash_delete(tr_hash hash)
     return tr_hash_delete(hash);
 }
 
+unsigned int tr_strhash_contains(tr_hash hash, const char *key)
+{
+    return tr_hash_contains(hash, &key);
+}
+
 void *tr_strhash_get(tr_hash hash, const char *key)
 {
     return tr_hash_get(hash, &key);
@@ -436,6 +441,11 @@ tr_hash tr_inthash_create(unsigned int itemsize)
 tr_err tr_inthash_delete(tr_hash hash)
 {
     return tr_hash_delete(hash);
+}
+
+unsigned int tr_inthash_contains(tr_hash hash, int key)
+{
+    return tr_hash_contains(hash, &key);
 }
 
 void *tr_inthash_get(tr_hash hash, int key)

@@ -42,7 +42,9 @@ tr_vector tr_hash_values(tr_hash hash);
 tr_hash tr_strhash_create(unsigned int itemsize);
 tr_err tr_strhash_delete(tr_hash hash);
 
+unsigned int tr_strhash_contains(tr_hash hash, const char *key);
 void *tr_strhash_get(tr_hash hash, const char *key);
+
 tr_err tr_strhash_set(tr_hash hash, const char *key, void *value);
 tr_err tr_strhash_clear(tr_hash, const char *key);
 
@@ -53,12 +55,13 @@ tr_vector tr_strhash_values(tr_hash hash);
 tr_hash tr_inthash_create(unsigned int itemsize);
 tr_err tr_inthash_delete(tr_hash hash);
 
+unsigned int tr_inthash_contains(tr_hash hash, int key);
 void *tr_inthash_get(tr_hash hash, int key);
+
 tr_err tr_inthash_set(tr_hash hash, int key, void *value);
 tr_err tr_inthash_clear(tr_hash, int key);
 
 tr_vector tr_inthash_keys(tr_hash hash);
 tr_vector tr_inthash_values(tr_hash hash);
-
 
 #endif
