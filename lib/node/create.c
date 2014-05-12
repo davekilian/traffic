@@ -7,6 +7,7 @@
 //
 
 #include <stdlib.h> // for NULL
+#include <string.h> // for strlen, strcpy
 
 #include "iface.h"
 #include "memory.h"
@@ -23,9 +24,11 @@ tr_node tr_node_create(tr_network net, const char *name)
     }
 
     node *n = (node *)tr_malloc(sizeof(node));
-    n->name = name;
     n->net = net;
     n->ifaces = tr_strhash_create(sizeof(iface));
+
+    n->name = tr_malloc(strlen(name) + 1);
+    strcpy((char*)n->name, name);
 
     if (tr_net_add_node(net, n) < 0) {
         return NULL;
@@ -45,6 +48,7 @@ tr_err tr_node_delete(tr_node trn)
         return err;
     }
 
+    tr_free((void*)n->name);
     tr_strhash_delete(n->ifaces);
     return TR_OK;
 }
