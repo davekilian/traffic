@@ -22,6 +22,7 @@ LIBS =
 HEADERS = ../traffic.h \
 		  list.h \
 		  hash.h \
+		  set.h \
 		  vector.h \
 		  network.h \
 		  node.h \
@@ -34,7 +35,10 @@ OBJECTS = err.o \
 		  util/list.o \
 		  util/vector.o \
 		  util/hash.o \
-		  util/set.o
+		  util/set.o \
+		  network/create.o \
+		  network/uniqueid.o \
+		  network/model.o
 
 # Flags
 #

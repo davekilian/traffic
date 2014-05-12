@@ -88,17 +88,17 @@ tr_network tr_net_create(const char *name);
 // Gets the friendly name of this network.
 // Returns NULL if the network isn't named.
 //
-const char *tr_net_name();
+const char *tr_net_name(tr_network net);
 
 // Gets the number of nodes in this network
 //
-int tr_net_num_nodes(tr_network net);
+unsigned tr_net_num_nodes(tr_network net);
 
 // Fills the given array with the nodes in this network.
 // len indicates the length of the given array.
 // If the array is too small, this fails with TR_E
 //
-tr_err tr_net_nodes(tr_network net, tr_node *nodes, int len);
+tr_err tr_net_nodes(tr_network net, tr_node *nodes, unsigned len);
 
 // Adds a link between network interfaces i1 and i2.
 // link receives an object representing the physical link between the two.
@@ -107,12 +107,12 @@ tr_err tr_net_link(tr_network net, tr_iface i1, tr_iface i2, tr_link *link);
 
 // Indicates whether there is a node with the given unqiue ID on this network
 //
-bool tr_net_has_node(const char *name);
+bool tr_net_has_node(tr_network net, const char *name);
 
 // Gets the node with the given name.
 // If there is node with the given name, returns NULL.
 //
-tr_node tr_net_node(const char *name);
+tr_node tr_net_node(tr_network net, const char *name);
 
 // Frees memory in use by the network topology, its nodes, their interfaces,
 // and the links between those interfaces.
@@ -138,13 +138,13 @@ tr_network tr_node_network(tr_node node);
 
 // Gets the number of virtual network interfaces attached to this virtual node.
 //
-int tr_node_num_ifaces(tr_node node);
+unsigned tr_node_num_ifaces(tr_node node);
 
 // Gets the virtual network interfaces attached to this virtual node.
 // len is the length of the array to fill.
 // If the array is not long enough, this returns TR_EARRAYLEN.
 //
-tr_err tr_node_ifaces(tr_node node, tr_iface *ifaces, int len);
+tr_err tr_node_ifaces(tr_node node, tr_iface *ifaces, unsigned len);
 
 // Indicates whether the node has an interface with the given unique ID
 //
@@ -234,13 +234,13 @@ tr_err tr_iface_set_subnet_mask(tr_iface iface, int subnet);
 
 // Gets the number of other network interfaces this interface is connected to
 //
-int tr_iface_num_links(tr_iface iface);
+unsigned tr_iface_num_links(tr_iface iface);
 
 // Gets the other network interfaces this interface is connected to.
 // len is the length of the links array.
 // If the link array isn't long enough, fails with TR_EARRAYLEN.
 //
-tr_err tr_iface_links(tr_iface iface, tr_link *links, int len);
+tr_err tr_iface_links(tr_iface iface, tr_link *links, unsigned len);
 
 // Indicates whether the interfaces are linked to each other
 //
@@ -351,6 +351,7 @@ tr_err tr_net_unbind(tr_network net);
 bool tr_node_is_bound(tr_node node);
 
 // Indicates whether the interface is part of a bound network
+//
 bool tr_iface_is_bound(tr_iface iface);
 
 // Gets the MAC address of the host OS virtual network device for the iface.

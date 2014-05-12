@@ -8,6 +8,8 @@
 
 * Implement public API functions
 
+## Diagnostic logging
+
 ## Conf files
 
 * Migrate details from README into a separate doc structure
@@ -28,4 +30,6 @@
 * Routing nodes
 
 * User node program spinup and management
+
+## Simulation modeling
 

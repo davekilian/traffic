@@ -6,9 +6,15 @@
 // node.h - Declarations for virtual network nodes
 //
 
-#ifndef LINK_H
-#define LINK_H
+#ifndef NODE_H
+#define NODE_H
 
 #include <traffic.h>
+
+struct _node
+{
+};
+
+typedef struct _node node;
 
 #endif

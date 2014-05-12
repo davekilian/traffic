@@ -314,6 +314,24 @@ tr_err tr_hash_clear(tr_hash trh, const void *key)
     return TR_ENOTFOUND;
 }
 
+unsigned int tr_hash_num_keys(tr_hash trh)
+{
+    if (!trh) return 0;
+
+    hashtable *hash = (hashtable *)trh;
+    unsigned int count = 0;
+
+    for (unsigned int i = 0; i < hash->capacity; ++i) {
+        hashitem *item = tr_hash_item(hash, i);
+
+        if (item->occupied) {
+            count += 1;
+        }
+    }
+
+    return count;
+}
+
 tr_vector tr_hash_keys(tr_hash trh)
 {
     if (!trh) return NULL;
@@ -407,6 +425,11 @@ tr_err tr_strhash_clear(tr_hash hash, const char *key)
     return tr_hash_clear(hash, &key);
 }
 
+unsigned int tr_strhash_num_keys(tr_hash hash)
+{
+    return tr_hash_num_keys(hash);
+}
+
 tr_vector tr_strhash_keys(tr_hash hash)
 {
     return tr_hash_keys(hash);
@@ -461,6 +484,11 @@ tr_err tr_inthash_set(tr_hash hash, int key, void *value)
 tr_err tr_inthash_clear(tr_hash hash, int key)
 {
     return tr_hash_clear(hash, &key);
+}
+
+unsigned int tr_inthash_num_keys(tr_hash hash)
+{
+    return tr_hash_num_keys(hash);
 }
 
 tr_vector tr_inthash_keys(tr_hash hash)

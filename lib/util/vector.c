@@ -60,6 +60,16 @@ unsigned int tr_vec_size(tr_vector trv)
     return ((vector*)trv)->size;
 }
 
+unsigned int tr_vec_count(tr_vector vec)
+{
+    return tr_vec_size(vec);
+}
+
+unsigned int tr_vec_length(tr_vector vec)
+{
+    return tr_vec_size(vec);
+}
+
 tr_err tr_vec_resize(tr_vector trv, unsigned int capacity)
 {
     if (!trv) return TR_EPOINTER;
@@ -92,6 +102,14 @@ void *tr_vec_item(tr_vector trv, unsigned int index)
 
     vector *v = (vector*)trv;
     return ((char*)v->data) + (index * v->itemsize);
+}
+
+void *tr_vec_items(tr_vector trv)
+{
+    if (!trv) return NULL;
+
+    vector *v = (vector*)trv;
+    return v->data;
 }
 
 tr_err tr_vec_append(tr_vector trv, void *item)

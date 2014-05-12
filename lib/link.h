@@ -11,4 +11,10 @@
 
 #include <traffic.h>
 
+struct _link
+{
+};
+
+typedef struct _link link;
+
 #endif

@@ -11,4 +11,10 @@
 
 #include <traffic.h>
 
+struct _iface
+{
+};
+
+typedef struct _iface iface;
+
 #endif

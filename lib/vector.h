@@ -19,12 +19,13 @@ tr_err tr_vec_delete(tr_vector vec);
 unsigned int tr_vec_capacity(tr_vector vec);
 
 unsigned int tr_vec_size(tr_vector vec);
-inline unsigned int tr_vec_count(tr_vector vec) { return tr_vec_size(vec); }
-inline unsigned int tr_vec_length(tr_vector vec) { return tr_vec_size(vec); }
+unsigned int tr_vec_count(tr_vector vec);
+unsigned int tr_vec_length(tr_vector vec);
 
 tr_err tr_vec_resize(tr_vector vec, unsigned int capacity);
 
 void *tr_vec_item(tr_vector vec, unsigned int index);
+void *tr_vec_items(tr_vector vec);
 
 tr_err tr_vec_append(tr_vector vec, void *item);
 tr_err tr_vec_prepend(tr_vector vec, void *item);
