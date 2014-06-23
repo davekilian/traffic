@@ -128,7 +128,7 @@ tr_err tr_vec_insert(tr_vector trv, unsigned int index, void *item)
 {
     if (!trv) return TR_EPOINTER;
 
-    vector *v = (vector*)v;
+    vector *v = (vector*)trv;
     if (index > v->size) {
         return TR_EOUTOFRANGE;
     }
@@ -167,7 +167,7 @@ tr_err tr_vec_remove_at(tr_vector trv, unsigned int index)
 {
     if (!trv) return TR_EPOINTER;
 
-    vector *v = (vector*)v;
+    vector *v = (vector*)trv;
     if (index >= v->size) {
         return TR_EOUTOFRANGE;
     }
