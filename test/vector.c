@@ -13,7 +13,17 @@
 
 #include "test.h"
 
-int test_vector()
+int test_vector_basics()
+{
+    FAIL("TODO NYI");
+}
+
+int test_vector_enum()
+{
+    FAIL("TODO NYI");
+}
+
+int test_vector_stackfuncs()
 {
     FAIL("TODO NYI");
 }

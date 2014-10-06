@@ -29,9 +29,19 @@ typedef struct _test test;
 
 static test g_tests[] = 
 {
-    { "test_vector", test_vector },
-    { "test_list", test_list },
-    { "test_hash", test_hash },
+    { "test_vector_basics", test_vector_basics },
+    { "test_vector_enum", test_vector_enum },
+    { "test_vector_stackfuncs", test_vector_stackfuncs },
+
+    { "test_list_basics", test_list_basics },
+    { "test_list_enum", test_list_enum },
+    { "test_list_addremove", test_list_addremove },
+
+    { "test_hash_basics", test_hash_basics },
+    { "test_hash_enum", test_hash_enum },
+
+    { "test_set_basics", test_set_basics },
+    { "test_set_enum", test_set_enum },
 };
 
 

@@ -3,7 +3,7 @@
 // traffic - A Simple Network Simulator
 // Copyright (c) Dave Kilian 2014
 //
-// test.h - Utilities for tests
+// test.h - Test declarations and utilities
 //
 
 extern char *g_lastTestError;
@@ -37,10 +37,31 @@ extern char *g_lastTestError;
         }                                           \
     } while (0)
 
+//
 // Unit test declarations
 // Add new items to the table in main.c
 //
-int test_vector();  // Tests the vector utilities
-int test_list();    // Tests the list utilities
-int test_hash();    // Tests the hash utilities
+
+
+// Tests for vector utility
+//
+int test_vector_basics();
+int test_vector_enum();
+int test_vector_stackfuncs();
+
+// Tests for list utility
+//
+int test_list_basics();
+int test_list_enum();
+int test_list_addremove();
+
+// Tests for hashtable utility
+//
+int test_hash_basics();
+int test_hash_enum();
+
+// Tests for hash set utility
+//
+int test_set_basics();
+int test_set_enum();
 
