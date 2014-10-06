@@ -9,7 +9,8 @@ endif
 
 # Output
 #
-TARGET = ../libtraffic.$(so)
+TARGET_NAME = libtraffic.$(so)
+TARGET = ../$(TARGET_NAME)
 
 # Libraries
 #
@@ -46,7 +47,11 @@ OBJECTS = err.o \
 #
 DEBUGFLAGS = -g -Wall
 CFLAGS = -std=c99 -fpic -fno-common $(DEBUGFLAGS)
-LDFLAGS = 
+LDFLAGS =
+
+ifeq ($(shell uname),Darwin)
+	LDFLAGS := $(LDFLAGS) -install_name $(TARGET_NAME)
+endif
 
 # Plumbing
 # http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
