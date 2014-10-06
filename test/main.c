@@ -32,6 +32,7 @@ static test g_tests[] =
     { "test_vector_basics", test_vector_basics },
     { "test_vector_enum", test_vector_enum },
     { "test_vector_stackfuncs", test_vector_stackfuncs },
+    { "test_vector_growshrink", test_vector_growshrink },
 
     { "test_list_basics", test_list_basics },
     { "test_list_enum", test_list_enum },
@@ -39,6 +40,8 @@ static test g_tests[] =
 
     { "test_hash_basics", test_hash_basics },
     { "test_hash_enum", test_hash_enum },
+    { "test_inthash_hashfunc", test_inthash_hashfunc },
+    { "test_strhash_hashfunc", test_strhash_hashfunc },
 
     { "test_set_basics", test_set_basics },
     { "test_set_enum", test_set_enum },

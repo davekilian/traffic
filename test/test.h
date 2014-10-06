@@ -23,6 +23,16 @@ extern char *g_lastTestError;
         }                                           \
     } while (0)
 
+#define EQUAL(actual, expected) do {                \
+        if ((actual) != (expected)) {               \
+            FAIL(                                   \
+                "In %s: %d: %s != %s",              \
+                __FILE__, __LINE__,                 \
+                #actual, #expected);                \
+        }                                           \
+    } while (0)
+
+
 // ASSERTs the given expression returns TR_OK
 //
 #define SUCCEED(expr) do {                          \
@@ -33,7 +43,7 @@ extern char *g_lastTestError;
                __FILE__, __LINE__,                  \
                #expr,                               \
                __error,                             \
-               arc_errstr(__error));                \
+               tr_errstr(__error));                 \
         }                                           \
     } while (0)
 
@@ -48,6 +58,7 @@ extern char *g_lastTestError;
 int test_vector_basics();
 int test_vector_enum();
 int test_vector_stackfuncs();
+int test_vector_growshrink();
 
 // Tests for list utility
 //
@@ -59,6 +70,8 @@ int test_list_addremove();
 //
 int test_hash_basics();
 int test_hash_enum();
+int test_inthash_hashfunc();
+int test_strhash_hashfunc();
 
 // Tests for hash set utility
 //

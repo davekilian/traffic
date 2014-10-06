@@ -22,3 +22,13 @@ int test_hash_enum()
 {
     FAIL("TODO NYI");
 }
+
+int test_inthash_hashfunc()
+{
+    FAIL("TODO NYI");
+}
+
+int test_strhash_hashfunc()
+{
+    FAIL("TODO NYI");
+}

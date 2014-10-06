@@ -136,7 +136,7 @@ tr_err tr_vec_insert(tr_vector trv, unsigned int index, void *item)
     assert(v->size < v->capacity);
 
     unsigned int after = (v->size - index) * v->itemsize;
-    memmove(tr_vec_item(v, index), tr_vec_item(v, index + 1), after);
+    memmove(tr_vec_item(v, index + 1), tr_vec_item(v, index), after);
     memcpy(tr_vec_item(v, index), item, v->itemsize);
 
     v->size += 1;
@@ -174,7 +174,7 @@ tr_err tr_vec_remove_at(tr_vector trv, unsigned int index)
 
     unsigned int after = (v->size - (index + 1)) * v->itemsize;
     if (after > 0) {
-        memmove(tr_vec_item(v, index + 1), tr_vec_item(v, index), after);
+        memmove(tr_vec_item(v, index), tr_vec_item(v, index + 1), after);
     }
 
     v->size -= 1;
