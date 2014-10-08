@@ -37,10 +37,13 @@ tr_err tr_vec_push(tr_vector vec, void *item);
 void *tr_vec_peek(tr_vector vec);
 tr_err tr_vec_pop(tr_vector vec);
 
-#define tr_vec_foreach(type, var, vec)                              \
-    unsigned int __tr_vec_foreach_index = 0;                        \
-    for (type var = (type)tr_vec_item(vec, __tr_vec_foreach_index); \
-         __tr_vec_foreach_index < tr_vec_size(vec);                 \
-         var = (type)tr_vec_item(vec, ++__tr_vec_foreach_index))
+#define tr_vec_foreach(type, var, vec)                  \
+    for (type var = (type)tr_vec_foreach_first(vec);    \
+         !tr_vec_foreach_finished(var);                 \
+         var = tr_vec_foreach_next(var))
+
+void *tr_vec_foreach_first(tr_vector vec);
+int   tr_vec_foreach_finished(void *item);
+void *tr_vec_foreach_next(tr_vector vec);
 
 #endif

@@ -214,3 +214,55 @@ tr_err tr_vec_pop(tr_vector trv)
 
     return tr_vec_remove_at(trv, i);
 }
+
+
+struct _foreach_item
+{
+    vector *parent;
+    int index;
+};
+
+typedef struct _foreach_item foreach_item;
+
+void *tr_vec_foreach_first(tr_vector trv)
+{
+    if (!trv) return NULL;
+    vector *v = (vector*)trv;
+
+    if (v->size == 0) {
+        return NULL;
+    }
+
+    foreach_item *item = tr_malloc(sizeof(foreach_item) + v->itemsize);
+    item->parent = v;
+    item->index = 0;
+
+    void *buf = (char*)item + sizeof(foreach_item);
+    buf = tr_vec_foreach_next(buf);
+
+    return buf;
+}
+
+int tr_vec_foreach_finished(void *buf)
+{
+    if (!buf) {
+        return 1;
+    }
+
+    foreach_item *item = (foreach_item*)((char*)buf - sizeof(foreach_item));
+    return item->index >= item->parent->size;
+}
+
+void *tr_vec_foreach_next(void *buf)
+{
+    if (!buf || tr_vec_foreach_finished(buf)) {
+        return NULL;
+    }
+
+    foreach_item *item = (foreach_item*)((char*)buf - sizeof(foreach_item));
+    vector *v = item->parent;
+
+    memcpy(buf, tr_vec_item(v, item->index++), v->itemsize);
+    return buf;
+}
+
