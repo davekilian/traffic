@@ -36,7 +36,7 @@ extern char *g_lastTestError;
 // ASSERTs the given expression returns TR_OK
 //
 #define SUCCEED(expr) do {                          \
-        tr_err __error = TR_OK;                     \
+        tr_err __error;                             \
         if ((__error = (expr)) != TR_OK) {          \
             FAIL(                                   \
                "In %s:%d: `%s` returned %d: %s",    \
@@ -45,6 +45,23 @@ extern char *g_lastTestError;
                __error,                             \
                tr_errstr(__error));                 \
         }                                           \
+    } while (0)
+
+// ASSERTs the given expression returns the given failure code
+//
+#define ERROR(err, expr) do {                                       \
+        tr_err __error;                                             \
+        tr_err __expected = (err);                                  \
+        if ((__error = (expr)) != TR_OK) {                          \
+            FAIL(                                                   \
+               "In %s:%d: `%s` returned %d: %s; expected %d: %s",   \
+               __FILE__, __LINE__,                                  \
+               #expr,                                               \
+               __error,                                             \
+               tr_errstr(__error),                                  \
+               __expected,                                          \
+               tr_errstr(__expected));                              \
+        }                                                           \
     } while (0)
 
 //

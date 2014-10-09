@@ -195,24 +195,24 @@ void *tr_vec_peek(tr_vector trv)
 {
     if (!trv) return NULL;
 
-    unsigned int i = tr_vec_size(trv);
-    if (i == (unsigned int)-1) {
+    unsigned int size = tr_vec_size(trv);
+    if (size == 0) {
         return NULL;
     }
 
-    return tr_vec_item(trv, i);
+    return tr_vec_item(trv, size - 1);
 }
 
 tr_err tr_vec_pop(tr_vector trv)
 {
     if (!trv) return TR_EPOINTER;
 
-    unsigned int i = tr_vec_size(trv);
-    if (i == (unsigned int)-1) {
+    unsigned int size = tr_vec_size(trv);
+    if (size == 0) {
         return TR_ESTACKEMPTY;
     }
 
-    return tr_vec_remove_at(trv, i);
+    return tr_vec_remove_at(trv, size - 1);
 }
 
 

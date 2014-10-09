@@ -150,10 +150,48 @@ int test_vector_enum()
 
 int test_vector_stackfuncs()
 {
-    FAIL("TODO NYI");
+    int items[] = { 1, 2, 3 };
+
+    tr_vector *vec = tr_vec_create(sizeof(int), 4);
+    SUCCEED(tr_vec_push(vec, &items[0]));
+    EQUAL(*(int*)tr_vec_peek(vec), items[0]);
+
+    SUCCEED(tr_vec_push(vec, &items[1]));
+    EQUAL(*(int*)tr_vec_peek(vec), items[1]);
+
+    SUCCEED(tr_vec_push(vec, &items[2]));
+    EQUAL(*(int*)tr_vec_peek(vec), items[2]);
+
+    SUCCEED(tr_vec_pop(vec));
+    EQUAL(*(int*)tr_vec_peek(vec), items[1]);
+
+    SUCCEED(tr_vec_pop(vec));
+    EQUAL(*(int*)tr_vec_peek(vec), items[0]);
+
+    ERROR(TR_ESTACKEMPTY, tr_vec_pop(vec));
+    EQUAL(NULL, tr_vec_peek(vec));
+
+    SUCCEED(tr_vec_delete(vec));
+    return 1;
 }
 
 int test_vector_growshrink()
 {
-    FAIL("TODO NYI");
+    tr_vector *vec = tr_vec_create(sizeof(int), 4);
+
+    for (int i = 0; i < 50000; ++i) {
+        SUCCEED(tr_vec_append(vec, &i));
+        EQUAL(tr_vec_size(vec), i + 1);
+    }
+
+    EQUAL(tr_vec_capacity(vec), 65536);
+
+    while (tr_vec_size(vec) > 12) {
+        SUCCEED(tr_vec_remove_at(vec, tr_vec_size(vec) - 1));
+    }
+
+    EQUAL(tr_vec_capacity(vec), 32);
+    
+    SUCCEED(tr_vec_delete(vec));
+    return 1;
 }
