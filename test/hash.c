@@ -13,22 +13,22 @@
 
 #include "test.h"
 
-int test_hash_basics()
+bool test_hash_basics()
 {
     FAIL("TODO NYI");
 }
 
-int test_hash_enum()
+bool test_hash_enum()
 {
     FAIL("TODO NYI");
 }
 
-int test_inthash_hashfunc()
+bool test_inthash_hashfunc()
 {
     FAIL("TODO NYI");
 }
 
-int test_strhash_hashfunc()
+bool test_strhash_hashfunc()
 {
     FAIL("TODO NYI");
 }

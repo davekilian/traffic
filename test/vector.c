@@ -14,7 +14,7 @@
 #include "vector.h"
 #include "test.h"
 
-int test_vector_basics()
+bool test_vector_basics()
 {
     tr_vector vec = tr_vec_create(sizeof(int), 4);
     ASSERT(vec != NULL, "tr_vec_create() returned NULL");
@@ -99,10 +99,10 @@ int test_vector_basics()
     EQUAL(*test, 3);
 
     SUCCEED(tr_vec_delete(vec));
-    return 1;
+    return true;
 }
 
-int test_vector_enum()
+bool test_vector_enum()
 {
     int items[][3] =
     {
@@ -126,18 +126,16 @@ int test_vector_enum()
     }
 
     int io = 0;
-    int ii = 0;
-
     tr_vec_foreach(tr_vector *, inner, outer) {
-        tr_vector real_inner = tr_vec_item(outer, io++);
-        ASSERT(real_inner != NULL, "Couldn't get item %d", io - 1);
 
-        tr_vec_foreach(int*, item, inner) {
-            int *real_item = tr_vec_item(*inner, ii++);
-            ASSERT(real_item != NULL, "Couldn't get item %d", ii - 1);
+        int ii = 0;
+        tr_vec_foreach(int*, item, *inner) {
+            EQUAL(*item, items[io][ii]);
 
-            EQUAL(*item, *real_item);
+            ii += 1;
         }
+
+        io += 1;
     }
 
     tr_vec_foreach(tr_vector *, inner, outer) {
@@ -145,10 +143,10 @@ int test_vector_enum()
     }
 
     SUCCEED(tr_vec_delete(outer));
-    return 1;
+    return true;
 }
 
-int test_vector_stackfuncs()
+bool test_vector_stackfuncs()
 {
     int items[] = { 1, 2, 3 };
 
@@ -172,10 +170,10 @@ int test_vector_stackfuncs()
     EQUAL(NULL, tr_vec_peek(vec));
 
     SUCCEED(tr_vec_delete(vec));
-    return 1;
+    return true;
 }
 
-int test_vector_growshrink()
+bool test_vector_growshrink()
 {
     tr_vector *vec = tr_vec_create(sizeof(int), 4);
 
@@ -193,5 +191,5 @@ int test_vector_growshrink()
     EQUAL(tr_vec_capacity(vec), 32);
     
     SUCCEED(tr_vec_delete(vec));
-    return 1;
+    return true;
 }

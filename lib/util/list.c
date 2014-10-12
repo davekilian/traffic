@@ -67,8 +67,8 @@ bool tr_list_empty(tr_list trl)
 {
     if (!trl) return true;
 
-    list *l = (list*) trl;
-    return l->head != NULL;
+    list *l = (list*)trl;
+    return l->head == NULL;
 }
 
 void *tr_list_first(tr_list trl)
@@ -84,7 +84,7 @@ void *tr_list_last(tr_list trl)
     if (!trl) return NULL;
 
     list *l = (list*)trl;
-    return l->head ? listnode_value(l->tail) : NULL;
+    return l->tail ? listnode_value(l->tail) : NULL;
 }
 
 void *tr_list_next(void *value)
@@ -152,6 +152,9 @@ tr_err tr_list_add_before(void *other, void *item)
     if (onode->prev) {
         onode->prev->next = node;
     }
+    else {
+        l->head = node;
+    }
 
     node->prev = onode->prev;
     node->next = onode;
@@ -170,6 +173,9 @@ tr_err tr_list_add_after(void *other, void *item)
 
     if (onode->next) {
         onode->next->prev = node;
+    }
+    else {
+        l->tail = node;
     }
 
     node->next = onode->next;
@@ -213,6 +219,7 @@ tr_err tr_list_remove(void *item)
     if (l->head == node) {
         l->head = l->head->next;
     }
+
     if (l->tail == node) {
         l->tail = l->tail->prev;
     }

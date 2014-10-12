@@ -16,7 +16,7 @@
 char *g_lastTestError = NULL;
 
 
-typedef int (*testfunc)();
+typedef bool (*testfunc)();
 
 struct _test
 {

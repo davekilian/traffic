@@ -238,24 +238,29 @@ void *tr_vec_foreach_first(tr_vector trv)
     item->index = 0;
 
     void *buf = (char*)item + sizeof(foreach_item);
-    buf = tr_vec_foreach_next(buf);
+    memcpy(buf, tr_vec_item(v, item->index++), v->itemsize);
 
     return buf;
 }
 
-int tr_vec_foreach_finished(void *buf)
+bool tr_vec_foreach_finished(void *buf)
 {
     if (!buf) {
         return 1;
     }
 
     foreach_item *item = (foreach_item*)((char*)buf - sizeof(foreach_item));
-    return item->index >= item->parent->size;
+    return item->index > item->parent->size;
 }
 
 void *tr_vec_foreach_next(void *buf)
 {
-    if (!buf || tr_vec_foreach_finished(buf)) {
+    if (!buf) {
+        return NULL;
+    }
+
+    if (tr_vec_foreach_finished(buf)) {
+        tr_free(buf);
         return NULL;
     }
 

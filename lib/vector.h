@@ -43,7 +43,7 @@ tr_err tr_vec_pop(tr_vector vec);
          var = tr_vec_foreach_next(var))
 
 void *tr_vec_foreach_first(tr_vector vec);
-int   tr_vec_foreach_finished(void *item);
-void *tr_vec_foreach_next(tr_vector vec);
+bool  tr_vec_foreach_finished(void *item);
+void *tr_vec_foreach_next(void *item);
 
 #endif

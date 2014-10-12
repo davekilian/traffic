@@ -13,12 +13,12 @@
 
 #include "test.h"
 
-int test_set_basics()
+bool test_set_basics()
 {
     FAIL("TODO NYI");
 }
 
-int test_set_enum()
+bool test_set_enum()
 {
     FAIL("TODO NYI");
 }

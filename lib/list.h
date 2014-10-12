@@ -34,6 +34,6 @@ tr_err tr_list_remove_first(tr_list list);
 tr_err tr_list_remove_last(tr_list list);
 
 #define tr_list_foreach(type, var, list)        \
-    for (type var = (type)tr_list_first(list)   \
+    for (type var = (type)tr_list_first(list);  \
          var; var = (type)tr_list_next(var))
 #endif

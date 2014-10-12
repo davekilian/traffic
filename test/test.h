@@ -12,7 +12,7 @@ extern char *g_lastTestError;
 //
 #define FAIL(...) do {                              \
     asprintf(&g_lastTestError, __VA_ARGS__);        \
-    return 0;                                       \
+    return false;                                   \
     } while (0)
 
 // Calls FAIL if the given expression evaluates to 0
@@ -72,26 +72,26 @@ extern char *g_lastTestError;
 
 // Tests for vector utility
 //
-int test_vector_basics();
-int test_vector_enum();
-int test_vector_stackfuncs();
-int test_vector_growshrink();
+bool test_vector_basics();
+bool test_vector_enum();
+bool test_vector_stackfuncs();
+bool test_vector_growshrink();
 
 // Tests for list utility
 //
-int test_list_basics();
-int test_list_enum();
-int test_list_addremove();
+bool test_list_basics();
+bool test_list_enum();
+bool test_list_addremove();
 
 // Tests for hashtable utility
 //
-int test_hash_basics();
-int test_hash_enum();
-int test_inthash_hashfunc();
-int test_strhash_hashfunc();
+bool test_hash_basics();
+bool test_hash_enum();
+bool test_inthash_hashfunc();
+bool test_strhash_hashfunc();
 
 // Tests for hash set utility
 //
-int test_set_basics();
-int test_set_enum();
+bool test_set_basics();
+bool test_set_enum();
 
