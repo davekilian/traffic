@@ -22,7 +22,7 @@ tr_err tr_set_delete(tr_set set)
     return tr_hash_delete(set);
 }
 
-unsigned int tr_set_contains(tr_set set, const void *key)
+bool tr_set_contains(tr_set set, const void *key)
 {
     return tr_hash_contains(set, key);
 }
@@ -52,7 +52,7 @@ tr_err tr_strset_delete(tr_set set)
     return tr_strhash_delete(set);
 }
 
-unsigned int tr_strset_contains(tr_set set, const char *key)
+bool tr_strset_contains(tr_set set, const char *key)
 {
     return tr_strhash_contains(set, key);
 }
@@ -82,7 +82,7 @@ tr_err tr_intset_delete(tr_set set)
     return tr_inthash_delete(set);
 }
 
-unsigned int tr_intset_contains(tr_set set, int key)
+bool tr_intset_contains(tr_set set, int key)
 {
     return tr_inthash_contains(set, key);
 }

@@ -200,7 +200,7 @@ tr_err tr_hash_delete(tr_hash trh)
     return TR_OK;
 }
 
-unsigned int tr_hash_contains(tr_hash trh, const void *key)
+bool tr_hash_contains(tr_hash trh, const void *key)
 {
     if (!trh) return false;
 
@@ -209,9 +209,12 @@ unsigned int tr_hash_contains(tr_hash trh, const void *key)
     hashitem *bucket = tr_hash_item(hash, i);
 
     for (hashitem *item = bucket; item; item = item->next) {
-        void *itemkey = tr_hashitem_key(hash, item);
 
-        if (hash->equalfunc(key, itemkey)) {
+        if (!item->occupied) {
+            return false;
+        }
+
+        if (hash->equalfunc(key, tr_hashitem_key(hash, item))) {
             return true;
         }
     }
@@ -401,7 +404,7 @@ unsigned int tr_hashfunc_str(const void *val)
     return hash;
 }
 
-unsigned int tr_equalfunc_str(const void *val1, const void *val2)
+bool tr_equalfunc_str(const void *val1, const void *val2)
 {
     const char *str1 = *((const char **)val1);
     const char *str2 = *((const char **)val2);
@@ -427,7 +430,7 @@ tr_err tr_strhash_delete(tr_hash hash)
     return tr_hash_delete(hash);
 }
 
-unsigned int tr_strhash_contains(tr_hash hash, const char *key)
+bool tr_strhash_contains(tr_hash hash, const char *key)
 {
     return tr_hash_contains(hash, &key);
 }
@@ -444,11 +447,6 @@ tr_err tr_strhash_set(tr_hash hash, const char *key, void *value)
 
 tr_err tr_strhash_clear(tr_hash hash, const char *key)
 {
-    const char *value = *(const char **)tr_strhash_get(hash, key);
-    if (value) {
-        tr_free((void*)value);
-    }
-
     return tr_hash_clear(hash, &key);
 }
 
@@ -472,7 +470,7 @@ unsigned int tr_hashfunc_int(const void *num)
     return *((unsigned int*)num);
 }
 
-unsigned int tr_equalfunc_int(const void *val1, const void *val2)
+bool tr_equalfunc_int(const void *val1, const void *val2)
 {
     unsigned int num1 = *((unsigned int *)val1);
     unsigned int num2 = *((unsigned int *)val2);
@@ -493,7 +491,7 @@ tr_err tr_inthash_delete(tr_hash hash)
     return tr_hash_delete(hash);
 }
 
-unsigned int tr_inthash_contains(tr_hash hash, int key)
+bool tr_inthash_contains(tr_hash hash, int key)
 {
     return tr_hash_contains(hash, &key);
 }
