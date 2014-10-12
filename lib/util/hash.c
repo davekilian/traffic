@@ -83,10 +83,18 @@ static void *tr_hashitem_value(hashtable *hash, hashitem *item)
     return (char*)item + sizeof(hashitem) + hash->keysize;
 }
 
+// Sets an item in the hash, without resizing it
+//
+static tr_err tr_hash_set_without_resizing(hashtable *hash, 
+                                           const void *key, 
+                                           const void *value);
+
 // Resizes an existing hash, migrating over any existing data
 //
 static void tr_hash_resize(hashtable *hash, unsigned int capacity)
 {
+    assert(hash->numused < capacity);
+
     // Store the old item table
     unsigned int prevcap = hash->capacity;
     void *previtems = hash->items;
@@ -111,7 +119,7 @@ static void tr_hash_resize(hashtable *hash, unsigned int capacity)
                 void *key = ((char*)item + sizeof(hashitem));
                 void *value = ((char*)key + hash->keysize);
 
-                tr_hash_set(hash, key, value);
+                tr_hash_set_without_resizing(hash, key, value);
             }
         }
 
@@ -178,7 +186,7 @@ tr_hash tr_hash_create(unsigned int keysize,
     hash->cellar = 0;
     hash->items = NULL;
 
-    tr_hash_resize(hash, 16);
+    tr_hash_resize(hash, 2);
     return hash;
 }
 
@@ -235,14 +243,25 @@ tr_err tr_hash_set(tr_hash trh, const void *key, const void *value)
     if (!trh) return TR_EPOINTER;
     hashtable *hash = (hashtable*)trh;
 
+    tr_err err = tr_hash_set_without_resizing(hash, key, value);
+    if (err < 0) {
+        return err;
+    }
+
+    tr_hash_resize_if_needed(hash);
+    return err;
+}
+
+static tr_err tr_hash_set_without_resizing(hashtable *hash, 
+                                           const void *key, 
+                                           const void *value)
+{
     // Insert the item into its bucket if the bucket is free
     unsigned int i = tr_hash_addr(hash, key);
     hashitem *bucket = tr_hash_item(hash, i);
 
     if (!bucket->occupied) {
         tr_hashitem_claim(hash, bucket, key, value);
-        tr_hash_resize_if_needed(hash);
-
         return TR_OK;
     }
 
@@ -256,7 +275,6 @@ tr_err tr_hash_set(tr_hash trh, const void *key, const void *value)
         cellar->next = bucket->next;
         bucket->next = cellar;
 
-        tr_hash_resize_if_needed(hash);
         return TR_OK;
     }
 
@@ -271,7 +289,6 @@ tr_err tr_hash_set(tr_hash trh, const void *key, const void *value)
             item->next = bucket->next;
             bucket->next = item;
 
-            tr_hash_resize_if_needed(hash);
             return TR_OK;
         }
     }
@@ -362,7 +379,7 @@ tr_vector tr_hash_values(tr_hash trh)
         hashitem *item = tr_hash_item(hash, i);
 
         if (item->occupied) {
-            void *value = (char*)item + sizeof(hashitem);
+            void *value = (char*)item + sizeof(hashitem) + hash->keysize;
             tr_vec_append(values, value);
         }
     }
@@ -374,10 +391,10 @@ unsigned int tr_hashfunc_str(const void *val)
 {
     // This is the djb2 hash function (http://www.cse.yorku.ca/~oz/hash.html)
     //
-    const char *str = (const char *)val;
+    const char *str = *(const char **)val;
     unsigned int hash = 5381;
 
-    while (str) {
+    while (*str) {
         hash = (hash << 5) + hash + *(str++);
     }
 
@@ -402,6 +419,11 @@ tr_hash tr_strhash_create(unsigned int itemsize)
 
 tr_err tr_strhash_delete(tr_hash hash)
 {
+    tr_vector values = tr_hash_values(hash);
+    tr_vec_foreach(char **, value, values) {
+        tr_free(*value);
+    }
+
     return tr_hash_delete(hash);
 }
 
@@ -422,6 +444,11 @@ tr_err tr_strhash_set(tr_hash hash, const char *key, void *value)
 
 tr_err tr_strhash_clear(tr_hash hash, const char *key)
 {
+    const char *value = *(const char **)tr_strhash_get(hash, key);
+    if (value) {
+        tr_free((void*)value);
+    }
+
     return tr_hash_clear(hash, &key);
 }
 
