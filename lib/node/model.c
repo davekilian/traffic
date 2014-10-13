@@ -44,7 +44,10 @@ tr_err tr_node_ifaces(tr_node trn, tr_iface *ifaces, unsigned len)
     node *n = (node *)trn;
     tr_vector vec = tr_strhash_values(n->ifaces);
 
-    if (len > tr_vec_count(vec)) {
+    if (len < tr_vec_count(vec)) {
+        return TR_EARRAYLEN;
+    }
+    else if (len > tr_vec_count(vec)) {
         len = tr_vec_count(vec);
     }
 

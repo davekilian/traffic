@@ -37,6 +37,13 @@ tr_err tr_net_delete(tr_network trn)
 
     network *net = (network *)trn;
 
+    tr_vec_foreach(node *, n, net->nodes) {
+        tr_err err = tr_net_remove_node(net, n);
+        if (err < 0) {
+            return err;
+        }
+    }
+
     tr_strset_delete(net->entityids);
     tr_strhash_delete(net->nodes);
     tr_strhash_delete(net->links);

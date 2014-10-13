@@ -36,7 +36,10 @@ tr_err tr_net_nodes(tr_network trn, tr_node *nodes, unsigned int len)
     network *net = (network *)trn;
     tr_vector nodevec = tr_hash_values(net->nodes);
 
-    if (len > tr_vec_length(nodevec)) {
+    if (len < tr_vec_length(nodevec)) {
+        return TR_EARRAYLEN;
+    }
+    else if (len > tr_vec_length(nodevec)) {
         len = tr_vec_length(nodevec);
     }
 
@@ -74,6 +77,15 @@ tr_err tr_net_add_node(network *net, struct _node *node)
     if (!net) return TR_EPOINTER;
     if (!node) return TR_EPOINTER;
 
+    if (tr_net_id_taken(net, node->name)) {
+        return TR_ENAMETAKEN;
+    }
+
+    tr_err err = tr_net_take_id(net, node->name);
+    if (err < 0) {
+        return err;
+    }
+
     return tr_strhash_set(net->nodes, node->name, node);
 }
 
@@ -81,6 +93,11 @@ tr_err tr_net_remove_node(network *net, struct _node *node)
 {
     if (!net) return TR_EPOINTER;
     if (!node) return TR_EPOINTER;
+
+    tr_err err = tr_net_release_id(net, node->name);
+    if (err < 0) {
+        return err;
+    }
 
     return tr_strhash_clear(net->nodes, node->name);
 }

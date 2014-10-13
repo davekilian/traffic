@@ -96,7 +96,7 @@ unsigned tr_net_num_nodes(tr_network net);
 
 // Fills the given array with the nodes in this network.
 // len indicates the length of the given array.
-// If the array is too small, this fails with TR_E
+// If the array is too small, this fails with TR_EARRAYLEN.
 //
 tr_err tr_net_nodes(tr_network net, tr_node *nodes, unsigned len);
 

@@ -8,7 +8,7 @@
 
 #include "network.h"
 
-unsigned int tr_net_id_taken(network *net, const char *id)
+bool tr_net_id_taken(network *net, const char *id)
 {
     return tr_strset_contains(net->entityids, id);
 }

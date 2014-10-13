@@ -29,7 +29,7 @@ typedef struct _network network;
 // Checks if some other entity in the network is already using the given
 // network entity ID.
 //
-unsigned int tr_net_id_taken(network *net, const char *id);
+bool tr_net_id_taken(network *net, const char *id);
 
 // Marks the given network entity ID as in use.
 // Won't fail if the ID is already taken; use tr_net_id_taken instead.
